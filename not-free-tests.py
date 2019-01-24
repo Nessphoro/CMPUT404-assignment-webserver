@@ -57,6 +57,7 @@ class TestYourWebserver(unittest.TestCase):
         url = self.baseurl + "/../../../../../../../../../../../../etc/group"
         try:
             req = request.urlopen(url, None, 3)
+            print(req.getcode())
             self.assertTrue( False, "Should have thrown an HTTP Error! [%d]" % req.getcode())
         except request.HTTPError as e:
             self.assertTrue( e.getcode()  == 404 , ("404 Not FOUND! %d" % e.getcode()))
