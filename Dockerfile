@@ -12,5 +12,6 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 USER me
 WORKDIR /home/me
+RUN echo cloning
 RUN git clone https://github.com/Nessphoro/CMPUT404-assignment-webserver malynin
 CMD bash -c "cd /home/me/malynin && ./runner.sh"
