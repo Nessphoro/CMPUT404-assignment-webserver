@@ -93,7 +93,8 @@ async def send_file(writer, stats, filepath):
         write_header(writer, ("Content-Length", stats.st_size))
         writer.write(b"\r\n")
         with open(filepath, "rb") as fd:
-            await asyncio.get_running_loop().sendfile(writer.transport, fd)
+            buf = fd.read()
+            writer.write(buf)
         await writer.drain()
     except:
         raise HttpEnd()
@@ -146,8 +147,9 @@ async def handle(reader, writer):
 
 async def main():
     server = await asyncio.start_server(handle, host="127.0.0.1", port=8080)
-    async with server:
-        await server.serve_forever()
+    # await server.serve_forever()
 
 
-asyncio.run(main())
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+loop.run_forever()
